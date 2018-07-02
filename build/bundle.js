@@ -33,6 +33,46 @@ function testAction(test) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.initialState = undefined;
+
+var _weapons = require("./weapons");
+
+var initialState = exports.initialState = {
+  test: "initialState_test",
+  weapons: _weapons.weapons
+};
+
+},{"./weapons":4}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _weapons;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var weaponTypes = exports.weaponTypes = {
+  ROCK: 0,
+  PAPER: 1,
+  SCISSORS: 2
+};
+
+var weapons = exports.weapons = (_weapons = {}, _defineProperty(_weapons, weaponTypes.ROCK, {
+  beats: [weaponTypes.SCISSORS]
+}), _defineProperty(_weapons, weaponTypes.SCISSORS, {
+  beats: [weaponTypes.PAPER]
+}), _defineProperty(_weapons, weaponTypes.PAPER, {
+  beats: [weaponTypes.ROCK]
+}), _weapons);
+
+},{}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.App = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -41,15 +81,13 @@ var _testObject = require("./testObject");
 
 var _store = require("./store");
 
-var _initialState = require("./initialState");
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var App = exports.App = function () {
   function App() {
     _classCallCheck(this, App);
 
-    this.store = new _store.Store(_initialState.initialState);
+    this.store = new _store.Store();
   }
 
   _createClass(App, [{
@@ -69,17 +107,7 @@ window.addEventListener('load', function () {
   return app.init();
 });
 
-},{"./initialState":4,"./store":5,"./testObject":6}],4:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var initialState = exports.initialState = {
-  test: "initialState_test"
-};
-
-},{}],5:[function(require,module,exports){
+},{"./store":6,"./testObject":7}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -95,15 +123,17 @@ var _actionTypes = require('./actions/actionTypes');
 
 var types = _interopRequireWildcard(_actionTypes);
 
+var _initialState = require('./config/initialState');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Store = exports.Store = function () {
-  function Store(initialState) {
+  function Store() {
     _classCallCheck(this, Store);
 
-    this.state = initialState;
+    this.state = _initialState.initialState;
     this.subscribers = [];
   }
 
@@ -154,7 +184,7 @@ var Store = exports.Store = function () {
   return Store;
 }();
 
-},{"./actions/actionTypes":1}],6:[function(require,module,exports){
+},{"./actions/actionTypes":1,"./config/initialState":3}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -165,6 +195,8 @@ exports.TestObject = undefined;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _actions = require("./actions/actions");
+
+var _weapons = require("./config/weapons");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -191,7 +223,9 @@ var TestObject = exports.TestObject = function () {
         return "<span>" + text + "</span>";
       };
 
-      div.innerHTML = innerText(this.store.getState().test);
+      console.log(this.store.getState().weapons[_weapons.weaponTypes.SCISSORS]);
+
+      div.innerHTML = innerText(this.store.getState().weapons[_weapons.weaponTypes.SCISSORS].beats);
 
       this.store.subscribe(function (state) {
         _this.div.innerHTML = innerText(state.test);
@@ -206,4 +240,4 @@ var TestObject = exports.TestObject = function () {
   return TestObject;
 }();
 
-},{"./actions/actions":2}]},{},[3]);
+},{"./actions/actions":2,"./config/weapons":4}]},{},[5]);

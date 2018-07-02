@@ -1,31 +1,16 @@
-import * as types from './actions/actionTypes';
+import { initialState } from './config/initialState';
+import reducer from './reducer';
 
 export class Store {
-  constructor(initialState) {
+  constructor() {
     this.state = initialState;
     this.subscribers = [];
   }
 
   dispatch(action) {
-    this.state = this.reducer(this.state, action);
+    this.state = reducer(this.state, action);
     this.notifySubscribers();
     return action;
-  }
-
-  reducer(state, action) {
-    let nextState = state || this.state;
-  
-    switch (action.type) {
-      case types.TEST_ACTION:
-        nextState = {
-          ...state,
-          test: action.test,
-        }
-        break;
-      default:
-    }
-
-    return nextState;
   }
 
   notifySubscribers() {

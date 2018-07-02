@@ -1,4 +1,5 @@
 import { testAction } from "./actions/actions";
+import { weaponTypes } from "./config/weapons";
 
 export class TestObject {
   constructor(props) {
@@ -17,7 +18,9 @@ export class TestObject {
       return `<span>${text}</span>`;
     }
 
-    div.innerHTML = innerText(this.store.getState().test);
+    console.log(this.store.getState().weapons[weaponTypes.SCISSORS]);
+    
+    div.innerHTML = innerText(this.store.getState().weapons[weaponTypes.SCISSORS].beats);
     
     this.store.subscribe((state) => {
       this.div.innerHTML = innerText(state.test);

@@ -1,10 +1,9 @@
 import { TestObject } from "./testObject";
 import { Store } from "./store";
-import { initialState } from "./initialState";
 
 export class App {
   constructor() {
-    this.store = new Store(initialState);
+    this.store = new Store();
   };
   
   init() {
