@@ -4,6 +4,8 @@ import { getMessageForOutcome } from './lib/getMessageForOutcome';
 import { initialState } from './config/initialState';
 import { getRandomChoice } from './lib/getRandomChoice';
 import { outcomes } from './config/outcomes';
+import { players } from './config/players';
+import { getCurrentWinningPlayer } from './lib/getCurrentWinningPlayer';
 
 export default (state, action) => {
   let nextState = state;
@@ -60,6 +62,8 @@ export default (state, action) => {
         }
       }
 
+      nextState = getCurrentWinningPlayer(nextState);
+      
       nextState = {
         ...nextState,
         outcome: outcome,
@@ -83,6 +87,7 @@ export default (state, action) => {
         player1Count: initialState.player1Count,
         player2Count: initialState.player2Count,
         started: initialState.started,
+        currentWinner: initialState.currentWinner
       }
     case types.ROUND_RESTART:
       nextState = {

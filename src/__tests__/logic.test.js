@@ -4,6 +4,7 @@ import { weaponTypes } from "../js/config/weapons";
 import { outcomes } from "../js/config/outcomes";
 import { initialState } from "../js/config/initialState";
 import { gameModes } from "../js/config/gameModes";
+import { players } from "../js/config/players";
 
 let app = new App();
 
@@ -133,7 +134,7 @@ describe('Game of', () => {
     expect(app.store.getState().gameMode).toEqual(gameModes.CVC);
   });
 
-  it('player 1 has the correct points', () => {
+  it('player have the correct points', () => {
     // win
     app.store.dispatch(player1ChoiceAction(weaponTypes.ROCK));
     app.store.dispatch(player2ChoiceAction(weaponTypes.SCISSORS));
@@ -150,7 +151,42 @@ describe('Game of', () => {
     app.store.dispatch(player1ChoiceAction(weaponTypes.SCISSORS));
     app.store.dispatch(player2ChoiceAction(weaponTypes.ROCK));
 
+    app.store.dispatch(roundRestartAction());
+
+    // lost
+    app.store.dispatch(player1ChoiceAction(weaponTypes.SCISSORS));
+    app.store.dispatch(player2ChoiceAction(weaponTypes.ROCK));
+
     expect(app.store.getState().player1Count).toEqual(2);
-    expect(app.store.getState().player2Count).toEqual(1);
+    expect(app.store.getState().player2Count).toEqual(2);
+    expect(app.store.getState().currentWinner).toEqual(players.NONE);
+  });
+
+  it('stats are reset with new game action after game has been played', () => {
+    // win
+    app.store.dispatch(player1ChoiceAction(weaponTypes.SCISSORS));
+    app.store.dispatch(player2ChoiceAction(weaponTypes.SCISSORS));
+
+    app.store.dispatch(roundRestartAction());
+
+    // win
+    app.store.dispatch(player1ChoiceAction(weaponTypes.SCISSORS));
+    app.store.dispatch(player2ChoiceAction(weaponTypes.SCISSORS));
+
+    app.store.dispatch(roundRestartAction());
+
+    // lost
+    app.store.dispatch(player1ChoiceAction(weaponTypes.SCISSORS));
+    app.store.dispatch(player2ChoiceAction(weaponTypes.ROCK));
+
+    expect(app.store.getState().outcome).toEqual(outcomes.LOST);
+    expect(app.store.getState().player1Count).toEqual(0);
+    expect(app.store.getState().currentWinner).toEqual(players.TWO);
+
+    app.store.dispatch(newGameAction());
+
+    expect(app.store.getState().player1Count).toEqual(initialState.player1Count);
+    expect(app.store.getState().player2Count).toEqual(initialState.player2Count);
+    expect(app.store.getState().currentWinner).toEqual(players.NONE);
   });
 });

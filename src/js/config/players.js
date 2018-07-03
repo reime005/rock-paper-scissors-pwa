@@ -1,4 +1,5 @@
-export const player = {
-  ONE: 0,
-  TWO: 1,
+export const players = {
+  NONE: 0,
+  ONE: 1,
+  TWO: 2,
 }

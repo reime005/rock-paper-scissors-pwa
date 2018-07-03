@@ -1,4 +1,5 @@
 import { gameModes } from "./gameModes";
+import { players } from "./players";
 
 export const initialState = {
   player1Choice: undefined,
@@ -9,4 +10,5 @@ export const initialState = {
   player2Count: 0,
   started: false,
   gameMode: gameModes.PVC,
+  currentWinner: players.NONE,
 }
