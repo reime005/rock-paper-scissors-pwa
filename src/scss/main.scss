@@ -1,3 +1,147 @@
+@import 'icons';
+
+$primaryColor: rgb(0, 23, 128);
+$whiteColor: whitesmoke;
+$selectColor: $whiteColor;
+$blackColor: rgb(8, 8, 8);
+
+@mixin title {
+  color: $whiteColor;
+  text-align: center;
+}
+
 body {
-  background-color: cornflowerblue;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: $primaryColor;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 0;
+  @include title();
+}
+
+h2 {
+  @include title();
+  margin: .5em auto;
+  font-weight: 600;
+}
+
+.container {
+  width: auto;
+  height: auto;
+  padding: 5px;
+
+  .topContainer {
+    border-radius: 5px;
+    margin: 10px;
+    background-color: $whiteColor;
+    display: block;
+    text-align: center;
+  }
+
+  .middleContainer {
+    @extend .topContainer;
+  }
+
+  .bottomContainer {
+    @extend .topContainer;
+    background-color: transparent;
+  }
+}
+
+.l2container {
+  width: auto;
+  height: auto;
+}
+
+.select-box {
+  margin: 5px;
+  padding: 5px;
+  width: 150px;
+  height: 150px;
+  border: 5px solid black;
+  display: inline-block;
+}
+
+.game-mode-select-box {
+  @extend .select-box;
+  height: auto;
+  padding: 35px;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: $selectColor;
+  }
+
+  span {
+    color: $blackColor;
+  }
+}
+
+.game-end-select-box {
+  @extend .select-box;
+  color: $whiteColor;
+  border: none;
+  height: auto;
+  display: block;
+  white-space: nowrap;
+  width: 50%;
+  margin: 0 auto;
+
+  button {
+    border: 3px solid transparent;
+    font-size: 1em;
+    font-weight: bolder;
+    text-transform: uppercase;
+    margin: 5px;
+    padding: 15px;
+    border-radius: 7px;
+
+    &:hover {
+      border-color: $whiteColor;
+      background-color: transparent;
+      color: $whiteColor;
+    }
+  }
+}
+
+.weapon-select-box {
+  @extend .select-box;
+
+  &:hover {
+    border-color: $selectColor;
+  }
+
+  @mixin innerWidth {
+    width: inherit;
+    height: inherit;
+  }
+
+  #rock {
+    @include innerWidth();
+    @include icon-hand-rock();
+
+    &:hover {
+      @include icon-hand-rock-select();
+    }
+  }
+
+  #paper {
+    @include innerWidth();
+    @include icon-hand-paper();
+    
+    &:hover {
+      @include icon-hand-paper-select();
+    }
+  }
+
+  #scissors {
+    @include innerWidth();
+    @include icon-hand-scissors();
+
+    &:hover {
+      @include icon-hand-scissors-select();
+    }
+  }
 }

@@ -8,7 +8,7 @@ export class App {
   
   init() {
     const parent = document.getElementById("container");
-    new TestObject({store: this.store, parent, id: 'testId'});
+    //new TestObject({store: this.store, parent, id: 'testId'});
   };
 }
 
