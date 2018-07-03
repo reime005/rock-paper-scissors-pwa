@@ -43,7 +43,10 @@ export class GamePlayView {
       this.player1Boxes[this.state.player1Choice].firstElementChild.classList.remove("selected");
       this.player2Boxes[this.state.player2Choice].firstElementChild.classList.remove("selected");
     } else {
+      this.player1Boxes[state.player1Choice] &&
       this.player1Boxes[state.player1Choice].firstElementChild.classList.add("selected");
+      
+      this.player2Boxes[state.player2Choice] &&
       this.player2Boxes[state.player2Choice].firstElementChild.classList.add("selected");
     }
   

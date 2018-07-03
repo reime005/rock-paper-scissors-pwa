@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -9,8 +8,6 @@
     <title>Rock Paper Scissors</title>
 		<script src="build/bundle.js"></script>
     <link rel="stylesheet" href="src/css/main.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
   </head>
 
 	<body>
@@ -29,6 +26,8 @@
 
       <div class="middleContainer" id="gamePlayViewContainer">
         <div class="player1">
+          <h3>Player 1</h3>
+
           <div class="weapon-select-box-player1">
             <div class="rock" id="rock"></div>
           </div>
@@ -43,6 +42,8 @@
         </div>
         
         <div class="player2">
+          <h3>Player 2</h3>
+
           <div class="weapon-select-box-player2">
             <div class="rock"></div>
           </div>
@@ -58,23 +59,21 @@
       </div>
 
       <div class="bottomContainer" id="gameControlViewContainer">
-        
         <div class="game-end-select-box">
-            <button id="newGameButton">new game</button>
+            <button class="small" id="newGameButton">new game</button>
         </div>
         
         <div class="game-end-select-box">
-            <span id="outcomeMessage">outcome</span>
+            <span id="outcomeMessage"></span>
         </div>
         
         <div class="game-end-select-box">
-            <span id="countText">count vs count</span>
+            <span class="small" id="countText"></span>
         </div>
         
         <div class="game-end-select-box">
-            <button id="roundRestartButton">play again</button>
+            <button class="big" id="roundRestartButton">play again</button>
         </div>
-
       </div>
 		</div>
 	</body>

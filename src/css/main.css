@@ -1,6 +1,7 @@
 body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  background-color: #001780; }
+  background-color: #234aac;
+  text-align: center; }
 
 h1 {
   font-size: 2em;
@@ -19,36 +20,38 @@ h2 {
   height: auto;
   padding: 5px; }
   .container .topContainer, .container .middleContainer, .container .bottomContainer {
-    border-radius: 5px;
-    margin: 10px;
+    padding: 15px;
+    box-shadow: 0 3px 12px #222631, 0 3px 12px #222631;
+    margin: 20px;
     background-color: whitesmoke;
     display: block;
     text-align: center; }
   .container .bottomContainer {
-    background-color: transparent; }
-
-.l2container {
-  width: auto;
-  height: auto; }
+    background-color: transparent;
+    box-shadow: none; }
 
 .select-box, .game-mode-select-box, .game-end-select-box, .weapon-select-box-player2, .weapon-select-box-player1 {
-  margin: 5px;
-  padding: 5px;
-  width: 150px;
-  height: 150px;
-  border: 5px solid black;
+  margin: 20px;
+  padding: 25px;
+  width: 125px;
+  height: 125px;
+  border-radius: 5px;
+  border: 6px solid black;
   display: inline-block; }
 
 .game-mode-select-box {
+  display: inline-block;
   height: auto;
   padding: 35px;
-  white-space: nowrap; }
+  width: 50%;
+  white-space: nowrap;
+  margin: 15px auto; }
   .game-mode-select-box:hover {
     border-color: whitesmoke; }
   .game-mode-select-box span {
     color: #080808; }
 
-.gameControlViewContainer {
+#gameControlViewContainer {
   display: none; }
 
 .game-end-select-box {
@@ -58,17 +61,25 @@ h2 {
   height: auto;
   white-space: nowrap;
   width: 50%;
-  margin: 0 auto; }
+  margin: auto;
+  text-align: center; }
   .game-end-select-box span {
-    line-height: 1em; }
+    line-height: 2em;
+    font-size: 2em; }
+    .game-end-select-box span.small {
+      font-size: 1.5em; }
   .game-end-select-box button {
     border: 3px solid transparent;
-    font-size: 1em;
     font-weight: bolder;
     text-transform: uppercase;
-    margin: 5px;
-    padding: 15px;
+    margin: auto;
     border-radius: 7px; }
+    .game-end-select-box button.big {
+      font-size: 2em;
+      padding: 25px; }
+    .game-end-select-box button.small {
+      font-size: 1em;
+      padding: 15px; }
     .game-end-select-box button:hover {
       border-color: whitesmoke;
       background-color: transparent;

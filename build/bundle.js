@@ -150,6 +150,8 @@ var _actions = require("../actions/actions");
 
 var _gameModes = require("../config/gameModes");
 
+var _initialState = require("../config/initialState");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var GameModeView = exports.GameModeView = function () {
@@ -180,19 +182,33 @@ var GameModeView = exports.GameModeView = function () {
         _this.store.dispatch((0, _actions.setGameModeAction)(_gameModes.gameModes.CVC));
       };
 
+      if (this.state.gameMode === _gameModes.gameModes.CVC && !this.cvcElement.classList.contains("selected")) {
+        this.cvcElement.classList.add("selected");
+      } else if (this.state.gameMode === _gameModes.gameModes.PVC && !this.pvcElement.classList.contains("selected")) {
+        this.pvcElement.classList.add("selected");
+      }
+
       this.store.subscribe(this._render.bind(this));
     }
   }, {
     key: "_render",
     value: function _render(state) {
-      if (this.state.gameMode !== state.gameMode) {}
+      if (state.started !== _initialState.initialState.started || state.outcome !== _initialState.initialState.outcome) {
+        this.self.style.display = "none";
+        this.pvcElement.classList.remove("selected");
+        this.cvcElement.classList.remove("selected");
+      } else if (state.started === _initialState.initialState.started) {
+        this.self.style.display = "block";
+      }
+
+      this.state = state;
     }
   }]);
 
   return GameModeView;
 }();
 
-},{"../actions/actions":2,"../config/gameModes":6}],5:[function(require,module,exports){
+},{"../actions/actions":2,"../config/gameModes":6,"../config/initialState":7}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -257,8 +273,9 @@ var GamePlayView = exports.GamePlayView = function () {
         this.player1Boxes[this.state.player1Choice].firstElementChild.classList.remove("selected");
         this.player2Boxes[this.state.player2Choice].firstElementChild.classList.remove("selected");
       } else {
-        this.player1Boxes[state.player1Choice].firstElementChild.classList.add("selected");
-        this.player2Boxes[state.player2Choice].firstElementChild.classList.add("selected");
+        this.player1Boxes[state.player1Choice] && this.player1Boxes[state.player1Choice].firstElementChild.classList.add("selected");
+
+        this.player2Boxes[state.player2Choice] && this.player2Boxes[state.player2Choice].firstElementChild.classList.add("selected");
       }
 
       this.state = state;
@@ -533,8 +550,6 @@ var _getRandomChoice = require('./lib/getRandomChoice');
 
 var _outcomes = require('./config/outcomes');
 
-var _players = require('./config/players');
-
 var _getCurrentWinningPlayer = require('./lib/getCurrentWinningPlayer');
 
 var _gameModes = require('./config/gameModes');
@@ -587,7 +602,8 @@ exports.default = function (state, action) {
 
       nextState = _extends({}, nextState, {
         outcome: outcome,
-        outcomeMessage: (0, _getMessageForOutcome.getMessageForOutcome)(outcome)
+        outcomeMessage: (0, _getMessageForOutcome.getMessageForOutcome)(outcome),
+        started: true
       });
       break;
     case types.SET_GAME_MODE:
@@ -622,7 +638,7 @@ exports.default = function (state, action) {
   return nextState;
 };
 
-},{"./actions/actionTypes":1,"./config/gameModes":6,"./config/initialState":7,"./config/outcomes":8,"./config/players":9,"./lib/compareWeapons":12,"./lib/getCurrentWinningPlayer":14,"./lib/getMessageForOutcome":15,"./lib/getRandomChoice":16}],18:[function(require,module,exports){
+},{"./actions/actionTypes":1,"./config/gameModes":6,"./config/initialState":7,"./config/outcomes":8,"./lib/compareWeapons":12,"./lib/getCurrentWinningPlayer":14,"./lib/getMessageForOutcome":15,"./lib/getRandomChoice":16}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

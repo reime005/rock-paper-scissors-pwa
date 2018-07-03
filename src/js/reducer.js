@@ -4,7 +4,6 @@ import { getMessageForOutcome } from './lib/getMessageForOutcome';
 import { initialState } from './config/initialState';
 import { getRandomChoice } from './lib/getRandomChoice';
 import { outcomes } from './config/outcomes';
-import { players } from './config/players';
 import { getCurrentWinningPlayer } from './lib/getCurrentWinningPlayer';
 import { gameModes } from './config/gameModes';
 
@@ -62,6 +61,7 @@ export default (state, action) => {
         ...nextState,
         outcome: outcome,
         outcomeMessage: getMessageForOutcome(outcome),
+        started: true,
       }
       break;
     case types.SET_GAME_MODE:
