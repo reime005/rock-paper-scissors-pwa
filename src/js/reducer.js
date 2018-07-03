@@ -6,42 +6,36 @@ import { getRandomChoice } from './lib/getRandomChoice';
 import { outcomes } from './config/outcomes';
 import { players } from './config/players';
 import { getCurrentWinningPlayer } from './lib/getCurrentWinningPlayer';
+import { gameModes } from './config/gameModes';
 
 export default (state, action) => {
   let nextState = state;
 
   switch (action.type) {
-    case types.PLAYER1_CHOICE:
-      if (nextState.player1Choice !== initialState.player1Choice) {
+    case types.PLAYER_CHOICE:
+      if (nextState.player1Choice !== initialState.player1Choice || 
+        nextState.player2Choice !== initialState.player2Choice) {
         break;
       }
 
       // "AI" player 1
       let player1Choice = action.player1Choice;
-      if (player1Choice === initialState.player1Choice) {
+      if (player1Choice === initialState.player1Choice ||
+        nextState.gameMode === gameModes.CVC) {
         player1Choice = getRandomChoice();
-      }
-
-      nextState = {
-        ...nextState,
-        player1Choice: player1Choice,
-      }
-
-      break;
-    case types.PLAYER2_CHOICE:
-      if (nextState.player2Choice !== initialState.player2Choice) {
-        break;
       }
 
       // "AI" player 2
       let player2Choice = action.player2Choice;
-      if (player2Choice === initialState.player2Choice) {
+      if (player2Choice === initialState.player2Choice ||
+         nextState.gameMode === gameModes.CVC) {
         player2Choice = getRandomChoice();
       }
-      
+
       nextState = {
         ...nextState,
-        player2Choice: player2Choice
+        player1Choice,
+        player2Choice,
       }
     case types.ROUND_END:
       if (nextState.outcome !== initialState.outcome) {
@@ -87,7 +81,8 @@ export default (state, action) => {
         player1Count: initialState.player1Count,
         player2Count: initialState.player2Count,
         started: initialState.started,
-        currentWinner: initialState.currentWinner
+        currentWinner: initialState.currentWinner,
+        gameMode: initialState.gameMode,
       }
     case types.ROUND_RESTART:
       nextState = {

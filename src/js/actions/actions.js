@@ -1,15 +1,9 @@
 import * as types from './actionTypes';
 
-export function player1ChoiceAction(player1Choice) {
+export function playerChoiceAction(player1Choice, player2Choice) {
   return {
-    type: types.PLAYER1_CHOICE,
-    player1Choice
-  }
-}
-
-export function player2ChoiceAction(player2Choice) {
-  return {
-    type: types.PLAYER2_CHOICE,
+    type: types.PLAYER_CHOICE,
+    player1Choice,
     player2Choice
   }
 }
@@ -32,7 +26,7 @@ export function newGameAction() {
   }
 }
 
-export function setGameMode(gameMode) {
+export function setGameModeAction(gameMode) {
   return {
     type: types.SET_GAME_MODE,
     gameMode

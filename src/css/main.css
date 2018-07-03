@@ -31,7 +31,7 @@ h2 {
   width: auto;
   height: auto; }
 
-.select-box, .game-mode-select-box, .game-end-select-box, .weapon-select-box {
+.select-box, .game-mode-select-box, .game-end-select-box, .weapon-select-box-player2, .weapon-select-box-player1 {
   margin: 5px;
   padding: 5px;
   width: 150px;
@@ -48,14 +48,19 @@ h2 {
   .game-mode-select-box span {
     color: #080808; }
 
+.gameControlViewContainer {
+  display: none; }
+
 .game-end-select-box {
+  display: block;
   color: whitesmoke;
   border: none;
   height: auto;
-  display: block;
   white-space: nowrap;
   width: 50%;
   margin: 0 auto; }
+  .game-end-select-box span {
+    line-height: 1em; }
   .game-end-select-box button {
     border: 3px solid transparent;
     font-size: 1em;
@@ -69,32 +74,32 @@ h2 {
       background-color: transparent;
       color: whitesmoke; }
 
-.weapon-select-box:hover {
-  border-color: whitesmoke; }
-
-.weapon-select-box #rock {
+.weapon-select-box-player2 .rock, .weapon-select-box-player1 .rock {
   width: inherit;
   height: inherit;
   background-image: url("../img/hand-rock.svg");
   background-repeat: no-repeat; }
-  .weapon-select-box #rock:hover {
+  .weapon-select-box-player2 .rock.selected, .weapon-select-box-player1 .rock.selected {
     background-image: url("../img/hand-rock-solid.svg");
     background-repeat: no-repeat; }
 
-.weapon-select-box #paper {
+.weapon-select-box-player2 .paper, .weapon-select-box-player1 .paper {
   width: inherit;
   height: inherit;
   background-image: url("../img/hand-paper.svg");
   background-repeat: no-repeat; }
-  .weapon-select-box #paper:hover {
+  .weapon-select-box-player2 .paper.selected, .weapon-select-box-player1 .paper.selected {
     background-image: url("../img/hand-paper-solid.svg");
     background-repeat: no-repeat; }
 
-.weapon-select-box #scissors {
+.weapon-select-box-player2 .scissors, .weapon-select-box-player1 .scissors {
   width: inherit;
   height: inherit;
   background-image: url("../img/hand-scissors.svg");
   background-repeat: no-repeat; }
-  .weapon-select-box #scissors:hover {
+  .weapon-select-box-player2 .scissors.selected, .weapon-select-box-player1 .scissors.selected {
     background-image: url("../img/hand-scissors-solid.svg");
     background-repeat: no-repeat; }
+
+.weapon-select-box-player1:hover {
+  border-color: whitesmoke; }

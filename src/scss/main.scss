@@ -79,15 +79,23 @@ h2 {
   }
 }
 
+.gameControlViewContainer {
+  display: none;
+}
+
 .game-end-select-box {
   @extend .select-box;
+  display: block;
   color: $whiteColor;
   border: none;
   height: auto;
-  display: block;
   white-space: nowrap;
   width: 50%;
   margin: 0 auto;
+
+  span {
+    line-height: 1em;
+  }
 
   button {
     border: 3px solid transparent;
@@ -106,42 +114,46 @@ h2 {
   }
 }
 
-.weapon-select-box {
+.weapon-select-box-player2 {
   @extend .select-box;
-
-  &:hover {
-    border-color: $selectColor;
-  }
 
   @mixin innerWidth {
     width: inherit;
     height: inherit;
   }
 
-  #rock {
+  .rock {
     @include innerWidth();
     @include icon-hand-rock();
 
-    &:hover {
+    &.selected {
       @include icon-hand-rock-select();
     }
   }
 
-  #paper {
+  .paper {
     @include innerWidth();
     @include icon-hand-paper();
-    
-    &:hover {
+
+    &.selected {
       @include icon-hand-paper-select();
     }
   }
 
-  #scissors {
+  .scissors {
     @include innerWidth();
     @include icon-hand-scissors();
 
-    &:hover {
+    &.selected {
       @include icon-hand-scissors-select();
     }
+  }
+}
+
+.weapon-select-box-player1 {
+  @extend .weapon-select-box-player2;
+
+  &:hover {
+    border-color: $selectColor;
   }
 }

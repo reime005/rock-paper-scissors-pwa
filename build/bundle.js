@@ -6,8 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var SET_GAME_MODE = exports.SET_GAME_MODE = 'SET_GAME_MODE';
 
-var PLAYER1_CHOICE = exports.PLAYER1_CHOICE = 'PLAYER1_CHOICE';
-var PLAYER2_CHOICE = exports.PLAYER2_CHOICE = 'PLAYER2_CHOICE';
+var PLAYER_CHOICE = exports.PLAYER_CHOICE = 'PLAYER_CHOICE';
 
 var NEW_GAME = exports.NEW_GAME = 'NEW_GAME';
 
@@ -20,12 +19,11 @@ var ROUND_RESTART = exports.ROUND_RESTART = 'ROUND_RESTART';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.player1ChoiceAction = player1ChoiceAction;
-exports.player2ChoiceAction = player2ChoiceAction;
+exports.playerChoiceAction = playerChoiceAction;
 exports.roundEndAction = roundEndAction;
 exports.roundRestartAction = roundRestartAction;
 exports.newGameAction = newGameAction;
-exports.setGameMode = setGameMode;
+exports.setGameModeAction = setGameModeAction;
 
 var _actionTypes = require('./actionTypes');
 
@@ -33,16 +31,10 @@ var types = _interopRequireWildcard(_actionTypes);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-function player1ChoiceAction(player1Choice) {
+function playerChoiceAction(player1Choice, player2Choice) {
   return {
-    type: types.PLAYER1_CHOICE,
-    player1Choice: player1Choice
-  };
-}
-
-function player2ChoiceAction(player2Choice) {
-  return {
-    type: types.PLAYER2_CHOICE,
+    type: types.PLAYER_CHOICE,
+    player1Choice: player1Choice,
     player2Choice: player2Choice
   };
 }
@@ -65,7 +57,7 @@ function newGameAction() {
   };
 }
 
-function setGameMode(gameMode) {
+function setGameModeAction(gameMode) {
   return {
     type: types.SET_GAME_MODE,
     gameMode: gameMode
@@ -78,12 +70,216 @@ function setGameMode(gameMode) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.GameControlView = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _actions = require("../actions/actions");
+
+var _weapons = require("../config/weapons");
+
+var _initialState = require("../config/initialState");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GameControlView = exports.GameControlView = function () {
+  function GameControlView(props) {
+    _classCallCheck(this, GameControlView);
+
+    this.store = props.store;
+    this.state = props.store.getState();
+    this.id = props.id;
+    this._init();
+  }
+
+  _createClass(GameControlView, [{
+    key: "_init",
+    value: function _init() {
+      var _this = this;
+
+      this.self = document.getElementById(this.id);
+      //TODO: hard coded string
+
+      this.newGameButtonElement = document.getElementById("newGameButton");
+      this.outcomeMessageElement = document.getElementById("outcomeMessage");
+      this.countTextElement = document.getElementById("countText");
+      this.roundRestartButtonElement = document.getElementById("roundRestartButton");
+
+      this.newGameButtonElement.onclick = function () {
+        _this.store.dispatch((0, _actions.newGameAction)());
+      };
+
+      this.roundRestartButtonElement.onclick = function () {
+        _this.store.dispatch((0, _actions.roundRestartAction)());
+      };
+
+      this.store.subscribe(this._render.bind(this));
+    }
+  }, {
+    key: "_render",
+    value: function _render(state) {
+      if (state.outcome === _initialState.initialState.outcome) {
+        this.self.style.display = "none";
+      } else {
+        this.self.style.display = "block";
+      }
+
+      if (this.state.outcomeMessage !== state.outcomeMessage) {
+        this.outcomeMessageElement.innerText = state.outcomeMessage;
+        this.countTextElement.innerText = state.player1Count + " / " + state.player2Count;
+      }
+
+      this.state = state;
+    }
+  }]);
+
+  return GameControlView;
+}();
+
+},{"../actions/actions":2,"../config/initialState":7,"../config/weapons":10}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GameModeView = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _actions = require("../actions/actions");
+
+var _gameModes = require("../config/gameModes");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GameModeView = exports.GameModeView = function () {
+  function GameModeView(props) {
+    _classCallCheck(this, GameModeView);
+
+    this.store = props.store;
+    this.state = props.store.getState();
+    this.id = props.id;
+    this._init();
+  }
+
+  _createClass(GameModeView, [{
+    key: "_init",
+    value: function _init() {
+      var _this = this;
+
+      this.self = document.getElementById(this.id);
+      //TODO: hard coded string
+      this.pvcElement = document.getElementById("PVC");
+      this.cvcElement = document.getElementById("CVC");
+
+      this.pvcElement.onclick = function () {
+        _this.store.dispatch((0, _actions.setGameModeAction)(_gameModes.gameModes.PVC));
+      };
+
+      this.cvcElement.onclick = function () {
+        _this.store.dispatch((0, _actions.setGameModeAction)(_gameModes.gameModes.CVC));
+      };
+
+      this.store.subscribe(this._render.bind(this));
+    }
+  }, {
+    key: "_render",
+    value: function _render(state) {
+      if (this.state.gameMode !== state.gameMode) {}
+    }
+  }]);
+
+  return GameModeView;
+}();
+
+},{"../actions/actions":2,"../config/gameModes":6}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GamePlayView = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _actions = require("../actions/actions");
+
+var _weapons = require("../config/weapons");
+
+var _initialState = require("../config/initialState");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GamePlayView = exports.GamePlayView = function () {
+  function GamePlayView(props) {
+    _classCallCheck(this, GamePlayView);
+
+    this.store = props.store;
+    this.state = props.store.getState();
+    this.id = props.id;
+    this._init();
+  }
+
+  _createClass(GamePlayView, [{
+    key: "_init",
+    value: function _init() {
+      var _this = this;
+
+      this.self = document.getElementById(this.id);
+      //TODO: hard coded string
+
+      this.paperElement = document.getElementById("paper");
+      this.rockElemet = document.getElementById("rock");
+      this.scissorsElement = document.getElementById("scissors");
+
+      this.paperElement.onclick = function () {
+        _this.store.dispatch((0, _actions.playerChoiceAction)(_weapons.weaponTypes.PAPER));
+      };
+
+      this.rockElemet.onclick = function () {
+        _this.store.dispatch((0, _actions.playerChoiceAction)(_weapons.weaponTypes.ROCK));
+      };
+
+      this.scissorsElement.onclick = function () {
+        _this.store.dispatch((0, _actions.playerChoiceAction)(_weapons.weaponTypes.SCISSORS));
+      };
+
+      this.player1Boxes = document.getElementsByClassName("weapon-select-box-player1");
+      this.player2Boxes = document.getElementsByClassName("weapon-select-box-player2");
+
+      this.store.subscribe(this._render.bind(this));
+    }
+  }, {
+    key: "_render",
+    value: function _render(state) {
+      // prevent iterating through both lists by comparing with the previous state
+      if (state.outcome === _initialState.initialState.outcome && this.state.outcome !== _initialState.initialState.outcome) {
+        this.player1Boxes[this.state.player1Choice].firstElementChild.classList.remove("selected");
+        this.player2Boxes[this.state.player2Choice].firstElementChild.classList.remove("selected");
+      } else {
+        this.player1Boxes[state.player1Choice].firstElementChild.classList.add("selected");
+        this.player2Boxes[state.player2Choice].firstElementChild.classList.add("selected");
+      }
+
+      this.state = state;
+    }
+  }]);
+
+  return GamePlayView;
+}();
+
+},{"../actions/actions":2,"../config/initialState":7,"../config/weapons":10}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var gameModes = exports.gameModes = {
   PVC: 0,
   CVC: 1
 };
 
-},{}],4:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -99,7 +295,7 @@ var initialState = exports.initialState = {
   player1Choice: undefined,
   player2Choice: undefined,
   outcome: undefined,
-  outcomeMessage: undefined,
+  outcomeMessage: " ",
   player1Count: 0,
   player2Count: 0,
   started: false,
@@ -107,7 +303,7 @@ var initialState = exports.initialState = {
   currentWinner: _players.players.NONE
 };
 
-},{"./gameModes":3,"./players":6}],5:[function(require,module,exports){
+},{"./gameModes":6,"./players":9}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -119,7 +315,7 @@ var outcomes = exports.outcomes = {
   TIE: 2
 };
 
-},{}],6:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -131,7 +327,7 @@ var players = exports.players = {
   TWO: 2
 };
 
-},{}],7:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -156,7 +352,7 @@ var weapons = exports.weapons = (_weapons = {}, _defineProperty(_weapons, weapon
   beats: [weaponTypes.ROCK]
 }), _weapons);
 
-},{}],8:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -166,9 +362,13 @@ exports.App = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _testObject = require("./testObject");
-
 var _store = require("./store");
+
+var _GameModeView = require("./components/GameModeView");
+
+var _GamePlayView = require("./components/GamePlayView");
+
+var _GameControlView = require("./components/GameControlView");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -182,8 +382,9 @@ var App = exports.App = function () {
   _createClass(App, [{
     key: "init",
     value: function init() {
-      var parent = document.getElementById("container");
-      //new TestObject({store: this.store, parent, id: 'testId'});
+      this.gameModeViewInstane = new _GameModeView.GameModeView({ id: "gameModeViewContainer", store: this.store });
+      this.gamePlayViewInstane = new _GamePlayView.GamePlayView({ id: "gamePlayViewContainer", store: this.store });
+      this.gameControlViewInstance = new _GameControlView.GameControlView({ id: "gameControlViewContainer", store: this.store });
     }
   }]);
 
@@ -196,7 +397,7 @@ window.addEventListener('load', function () {
   return app.init();
 });
 
-},{"./store":15,"./testObject":16}],9:[function(require,module,exports){
+},{"./components/GameControlView":3,"./components/GameModeView":4,"./components/GamePlayView":5,"./store":18}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -222,7 +423,7 @@ function compareWeapons(weaponP1, weaponP2) {
   throw new _exception.Exception("Not a valid type: " + weaponP1 + ", " + weaponP2);
 }
 
-},{"../config/outcomes":5,"../config/weapons":7,"./exception":10}],10:[function(require,module,exports){
+},{"../config/outcomes":8,"../config/weapons":10,"./exception":13}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -234,7 +435,7 @@ function Exception(message) {
   this.name = 'Exception';
 }
 
-},{}],11:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -270,7 +471,7 @@ function getCurrentWinningPlayer(state) {
   return nextState;
 }
 
-},{"../config/players":6}],12:[function(require,module,exports){
+},{"../config/players":9}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -295,7 +496,7 @@ function getMessageForOutcome(outcome) {
   }
 }
 
-},{"../config/outcomes":5,"./exception":10}],13:[function(require,module,exports){
+},{"../config/outcomes":8,"./exception":13}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -309,7 +510,7 @@ function getRandomChoice() {
   return Math.floor(Math.random() * _weapons.weaponTypes.SCISSORS + 1 + 0);
 }
 
-},{"../config/weapons":7}],14:[function(require,module,exports){
+},{"../config/weapons":10}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -336,40 +537,33 @@ var _players = require('./config/players');
 
 var _getCurrentWinningPlayer = require('./lib/getCurrentWinningPlayer');
 
+var _gameModes = require('./config/gameModes');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 exports.default = function (state, action) {
   var nextState = state;
 
   switch (action.type) {
-    case types.PLAYER1_CHOICE:
-      if (nextState.player1Choice !== _initialState.initialState.player1Choice) {
+    case types.PLAYER_CHOICE:
+      if (nextState.player1Choice !== _initialState.initialState.player1Choice || nextState.player2Choice !== _initialState.initialState.player2Choice) {
         break;
       }
 
       // "AI" player 1
       var player1Choice = action.player1Choice;
-      if (player1Choice === _initialState.initialState.player1Choice) {
+      if (player1Choice === _initialState.initialState.player1Choice || nextState.gameMode === _gameModes.gameModes.CVC) {
         player1Choice = (0, _getRandomChoice.getRandomChoice)();
-      }
-
-      nextState = _extends({}, nextState, {
-        player1Choice: player1Choice
-      });
-
-      break;
-    case types.PLAYER2_CHOICE:
-      if (nextState.player2Choice !== _initialState.initialState.player2Choice) {
-        break;
       }
 
       // "AI" player 2
       var player2Choice = action.player2Choice;
-      if (player2Choice === _initialState.initialState.player2Choice) {
+      if (player2Choice === _initialState.initialState.player2Choice || nextState.gameMode === _gameModes.gameModes.CVC) {
         player2Choice = (0, _getRandomChoice.getRandomChoice)();
       }
 
       nextState = _extends({}, nextState, {
+        player1Choice: player1Choice,
         player2Choice: player2Choice
       });
     case types.ROUND_END:
@@ -411,7 +605,8 @@ exports.default = function (state, action) {
         player1Count: _initialState.initialState.player1Count,
         player2Count: _initialState.initialState.player2Count,
         started: _initialState.initialState.started,
-        currentWinner: _initialState.initialState.currentWinner
+        currentWinner: _initialState.initialState.currentWinner,
+        gameMode: _initialState.initialState.gameMode
       });
     case types.ROUND_RESTART:
       nextState = _extends({}, nextState, {
@@ -427,7 +622,7 @@ exports.default = function (state, action) {
   return nextState;
 };
 
-},{"./actions/actionTypes":1,"./config/initialState":4,"./config/outcomes":5,"./config/players":6,"./lib/compareWeapons":9,"./lib/getCurrentWinningPlayer":11,"./lib/getMessageForOutcome":12,"./lib/getRandomChoice":13}],15:[function(require,module,exports){
+},{"./actions/actionTypes":1,"./config/gameModes":6,"./config/initialState":7,"./config/outcomes":8,"./config/players":9,"./lib/compareWeapons":12,"./lib/getCurrentWinningPlayer":14,"./lib/getMessageForOutcome":15,"./lib/getRandomChoice":16}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -486,60 +681,4 @@ var Store = exports.Store = function () {
   return Store;
 }();
 
-},{"./config/initialState":4,"./reducer":14}],16:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.TestObject = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _actions = require("./actions/actions");
-
-var _weapons = require("./config/weapons");
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var TestObject = exports.TestObject = function () {
-  function TestObject(props) {
-    _classCallCheck(this, TestObject);
-
-    this.store = props.store;
-    this.parent = props.parent;
-    this.id = props.id;
-
-    this._load();
-  }
-
-  _createClass(TestObject, [{
-    key: "_load",
-    value: function _load() {
-      var _this = this;
-
-      var div = document.getElementById(this.id);
-      this.div = div;
-
-      var innerText = function innerText(text) {
-        return "<span>" + text + "</span>";
-      };
-
-      console.log(this.store.getState().weapons[_weapons.weaponTypes.SCISSORS]);
-
-      div.innerHTML = innerText(this.store.getState().weapons[_weapons.weaponTypes.SCISSORS].beats);
-
-      this.store.subscribe(function (state) {
-        _this.div.innerHTML = innerText(state.test);
-      });
-
-      div.onclick = function () {
-        _this.store.dispatch((0, _actions.testAction)('Clicked'));
-      };
-    }
-  }]);
-
-  return TestObject;
-}();
-
-},{"./actions/actions":2,"./config/weapons":7}]},{},[8]);
+},{"./config/initialState":7,"./reducer":17}]},{},[11]);

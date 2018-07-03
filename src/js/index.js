@@ -1,5 +1,7 @@
-import { TestObject } from "./testObject";
 import { Store } from "./store";
+import { GameModeView } from "./components/GameModeView";
+import { GamePlayView } from "./components/GamePlayView";
+import { GameControlView } from "./components/GameControlView";
 
 export class App {
   constructor() {
@@ -7,8 +9,9 @@ export class App {
   };
   
   init() {
-    const parent = document.getElementById("container");
-    //new TestObject({store: this.store, parent, id: 'testId'});
+    this.gameModeViewInstane = new GameModeView({id: "gameModeViewContainer", store: this.store});
+    this.gamePlayViewInstane = new GamePlayView({id: "gamePlayViewContainer", store: this.store});
+    this.gameControlViewInstance = new GameControlView({id: "gameControlViewContainer", store: this.store});
   };
 }
 
