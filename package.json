@@ -2,7 +2,7 @@
   "name": "rock-paper-scissors-pwa",
   "version": "1.0.0",
   "description": "Simple Rock Paper Scissors Game based on Vanilla JavaScript, Jest for Testing and is Progressive Web App enabled.",
-  "main": "src/index.js",
+  "main": "index.html",
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
     "babelify": "^8.0.0",
@@ -20,7 +20,7 @@
     "sass": "^1.8.0"
   },
   "scripts": {
-    "build": "node node_modules/browserify/bin/cmd.js src/*.js -o ./bundle.js",
+    "build": "node node_modules/gulp/bin/gulp.js",
     "test": "jest"
   },
   "repository": {
@@ -28,7 +28,6 @@
     "url": "git+https://github.com/reime005/rock-paper-scissors-pwa.git"
   },
   "author": "Marius Reimer",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/reime005/rock-paper-scissors-pwa/issues"
   },

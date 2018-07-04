@@ -32,7 +32,7 @@ gulp.task('sass', function() {
     .pipe(gulp.dest('src/css'))
 })
 
-gulp.task('default', ['js']);
+gulp.task('default', ['sass', 'js']);
 
 gulp.task('watch', function () {
   gulp.watch('./src/js/**/*.js', ['default']);
