@@ -4,7 +4,14 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var jest = require('gulp-jest').default;
 var sass = require('gulp-sass');
+var connect = require('gulp-connect');
 
+gulp.task('webserver', function() {
+  connect.server({
+    livereload: true
+  });
+});
+ 
 gulp.task('jest', function () {
   process.env.NODE_ENV = 'test';
 
@@ -34,7 +41,10 @@ gulp.task('sass', function() {
 
 gulp.task('default', ['sass', 'js']);
 
+gulp.task('server', ['default', 'watch', 'webserver']);
+
 gulp.task('watch', function () {
-  gulp.watch('./src/js/**/*.js', ['default']);
+  gulp.watch('./src/js/**/*.js', ['js']);
+  gulp.watch('./serviceWorker.js', ['js']);
   gulp.watch('./src/scss/**/*.scss', ['sass']); 
 });

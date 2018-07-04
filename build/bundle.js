@@ -387,6 +387,8 @@ var _GamePlayView = require("./components/GamePlayView");
 
 var _GameControlView = require("./components/GameControlView");
 
+var _registerServiceWorker = require("../../src/js/registerServiceWorker");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var App = exports.App = function () {
@@ -411,10 +413,11 @@ var App = exports.App = function () {
 var app = new App();
 
 window.addEventListener('load', function () {
-  return app.init();
+  app.init();
+  (0, _registerServiceWorker.registerServiceWorker)();
 });
 
-},{"./components/GameControlView":3,"./components/GameModeView":4,"./components/GamePlayView":5,"./store":18}],12:[function(require,module,exports){
+},{"../../src/js/registerServiceWorker":18,"./components/GameControlView":3,"./components/GameModeView":4,"./components/GamePlayView":5,"./store":19}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -639,6 +642,52 @@ exports.default = function (state, action) {
 };
 
 },{"./actions/actionTypes":1,"./config/gameModes":6,"./config/initialState":7,"./config/outcomes":8,"./lib/compareWeapons":12,"./lib/getCurrentWinningPlayer":14,"./lib/getMessageForOutcome":15,"./lib/getRandomChoice":16}],18:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.registerServiceWorker = registerServiceWorker;
+function registerServiceWorker() {
+    if (!navigator.serviceWorker) {
+        return;
+    }
+
+    function trackInstalling(worker) {
+        console.log('Service Worker: installing...');
+        worker.addEventListener('statechange', function () {
+            console.log('Service Worker: ', worker.state);
+        });
+    }
+
+    navigator.serviceWorker.register('serviceWorker.js', {
+        scope: './'
+    }).then(function (reg) {
+        console.log('Service Worker: registered');
+
+        if (!navigator.serviceWorker.controller) {
+            return;
+        }
+
+        if (reg.waiting) {
+            console.log('Service Worker: installed');
+            return;
+        }
+
+        if (reg.installing) {
+            trackInstalling(reg.installing);
+            return;
+        }
+
+        reg.addEventListener('updatefound', function () {
+            trackInstalling(reg.installing);
+        });
+    }).catch(function (err) {
+        console.log('Service Worker: registration failed ', err);
+    });
+}
+
+},{}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

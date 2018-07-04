@@ -1,5 +1,5 @@
 {
-  "short_name": "Rock-Paper-Scissors",
+  "short_name": "Rock Paper Scissors",
   "name": "Rock Paper Scissors",
   "icons": [
     {
@@ -26,11 +26,5 @@
   "start_url": "./index.html",
   "background_color": "#234aac",
   "display": "standalone",
-  "theme_color": "#234aac",
-	"author": {
-		"name": "Marius Reimer (reime005)",
-		"website": "https://mariusreimer.com",
-		"github": "https://github.com/reime005",
-		"source-repo": "https://github.com/reime005/rock-paper-scissors-pwa"
-	}
+  "theme_color": "#234aac"
 }
