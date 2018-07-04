@@ -1,0 +1,116 @@
+body {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #234aac;
+  text-align: center; }
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 0;
+  color: whitesmoke;
+  text-align: center; }
+
+h2 {
+  color: whitesmoke;
+  text-align: center;
+  margin: .5em auto;
+  font-weight: 600; }
+
+.container {
+  width: auto;
+  height: auto;
+  padding: 5px; }
+  .container .topContainer, .container .middleContainer, .container .bottomContainer {
+    padding: 15px;
+    box-shadow: 0 3px 12px #222631, 0 3px 12px #222631;
+    margin: 20px;
+    background-color: whitesmoke;
+    display: block;
+    text-align: center; }
+  .container .bottomContainer {
+    background-color: transparent;
+    box-shadow: none; }
+
+.select-box, .game-mode-select-box, .game-end-select-box, .weapon-select-box-player2, .weapon-select-box-player1 {
+  margin: 20px;
+  padding: 25px;
+  width: 125px;
+  height: 125px;
+  border-radius: 5px;
+  border: 6px solid black;
+  display: inline-block; }
+
+.game-mode-select-box {
+  display: inline-block;
+  height: auto;
+  padding: 35px;
+  width: 50%;
+  white-space: nowrap;
+  margin: 15px auto; }
+  .game-mode-select-box:hover {
+    border-color: whitesmoke; }
+  .game-mode-select-box span {
+    color: #080808; }
+
+#gameControlViewContainer {
+  display: none; }
+
+.game-end-select-box {
+  display: block;
+  color: whitesmoke;
+  border: none;
+  height: auto;
+  white-space: nowrap;
+  width: auto;
+  margin: auto;
+  text-align: center; }
+  .game-end-select-box span {
+    line-height: 2em;
+    font-size: 2em; }
+    .game-end-select-box span.small {
+      font-size: 1.5em; }
+  .game-end-select-box button {
+    border: 3px solid transparent;
+    font-weight: bolder;
+    text-transform: uppercase;
+    margin: auto;
+    border-radius: 7px; }
+    .game-end-select-box button.big {
+      font-size: 2em;
+      padding: 25px; }
+    .game-end-select-box button.small {
+      font-size: 1em;
+      padding: 15px; }
+    .game-end-select-box button:hover {
+      border-color: whitesmoke;
+      background-color: transparent;
+      color: whitesmoke; }
+
+.weapon-select-box-player2 .rock, .weapon-select-box-player1 .rock {
+  width: inherit;
+  height: inherit;
+  background-image: url("../img/hand-rock.svg");
+  background-repeat: no-repeat; }
+  .weapon-select-box-player2 .rock.selected, .weapon-select-box-player1 .rock.selected {
+    background-image: url("../img/hand-rock-solid.svg");
+    background-repeat: no-repeat; }
+
+.weapon-select-box-player2 .paper, .weapon-select-box-player1 .paper {
+  width: inherit;
+  height: inherit;
+  background-image: url("../img/hand-paper.svg");
+  background-repeat: no-repeat; }
+  .weapon-select-box-player2 .paper.selected, .weapon-select-box-player1 .paper.selected {
+    background-image: url("../img/hand-paper-solid.svg");
+    background-repeat: no-repeat; }
+
+.weapon-select-box-player2 .scissors, .weapon-select-box-player1 .scissors {
+  width: inherit;
+  height: inherit;
+  background-image: url("../img/hand-scissors.svg");
+  background-repeat: no-repeat; }
+  .weapon-select-box-player2 .scissors.selected, .weapon-select-box-player1 .scissors.selected {
+    background-image: url("../img/hand-scissors-solid.svg");
+    background-repeat: no-repeat; }
+
+.weapon-select-box-player1:hover {
+  border-color: whitesmoke; }

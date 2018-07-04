@@ -1,0 +1,30 @@
+
+@mixin icon-hand-paper {
+  background-image: url('../img/hand-paper.svg');
+  background-repeat: no-repeat;
+}
+
+@mixin icon-hand-paper-select {
+  background-image: url('../img/hand-paper-solid.svg');
+  background-repeat: no-repeat;
+}
+
+@mixin icon-hand-rock {
+  background-image: url('../img/hand-rock.svg');
+  background-repeat: no-repeat;
+}
+
+@mixin icon-hand-rock-select {
+  background-image: url('../img/hand-rock-solid.svg');
+  background-repeat: no-repeat;
+}
+
+@mixin icon-hand-scissors {
+  background-image: url('../img/hand-scissors.svg');
+  background-repeat: no-repeat;
+}
+
+@mixin icon-hand-scissors-select {
+  background-image: url('../img/hand-scissors-solid.svg');
+  background-repeat: no-repeat;
+}
