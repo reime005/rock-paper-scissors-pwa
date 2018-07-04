@@ -1,0 +1,36 @@
+{
+  "short_name": "Rock-Paper-Scissors",
+  "name": "Rock Paper Scissors",
+  "icons": [
+    {
+      "src": "./src/img/icon/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./src/img/icon/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "./src/img/icon/icon-16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "./src/img/icon/icon-32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#234aac",
+  "display": "standalone",
+  "theme_color": "#234aac",
+	"author": {
+		"name": "Marius Reimer (reime005)",
+		"website": "https://mariusreimer.com",
+		"github": "https://github.com/reime005",
+		"source-repo": "https://github.com/reime005/rock-paper-scissors-pwa"
+	}
+}
