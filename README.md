@@ -16,12 +16,17 @@ Just pull or download the repository and open the `index.html` file.
 ## Build Instructions
 To rebuild the project files based on ES2015 and SASS, run the following command:
 
-  npm install
+    npm install
 
 Then, you have to run `gulp` by either:
 
-  ./node_modules/gulp/bin/gulp.js
+    ./node_modules/gulp/bin/gulp.js
 
 or installing it globally:
 
-  npm i -g gulp && gulp
+    npm i -g gulp && gulp
+
+## Test instructions
+Testing of the logic is done via jest:
+
+    npm run test
