@@ -4,13 +4,7 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var jest = require('gulp-jest').default;
 var sass = require('gulp-sass');
-var connect = require('gulp-connect');
-
-gulp.task('webserver', function() {
-  connect.server({
-    livereload: true
-  });
-});
+var webserver = require('gulp-webserver');
  
 gulp.task('jest', function () {
   process.env.NODE_ENV = 'test';
@@ -21,6 +15,17 @@ gulp.task('jest', function () {
     ],
     "automock": false
   }));
+});
+
+gulp.task('webserver', function() {
+  gulp.src('./')
+    .pipe(webserver({
+      directoryListing: false,
+      path: '/',
+      livereload: true,
+      open: true,
+      fallback: 'index.html'
+    }));
 });
 
 gulp.task('js', function () {

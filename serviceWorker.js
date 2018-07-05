@@ -10,15 +10,14 @@ var files = [
   './src/img/hand-rock.svg',
   './src/img/hand-scissors-solid.svg',
   './src/img/hand-scissors.svg',
-  './src/img/icon/icon-16.png',
-  './src/img/icon/icon-32.png',
   './src/img/icon/icon-192.png',
   './src/img/icon/icon-512.png',
+  './src/img/icon/icon.ico',
   './build/bundle.js',
   './manifest.json'
 ];
 
-var cacheName = 'rock-paper-scissors-pwa-cache-v1';
+var cacheName = 'rock-paper-scissors-pwa-cache-v1.0.0';
 
 //Adding `install` event listener
 self.addEventListener('install', (event) => {
@@ -38,7 +37,6 @@ self.addEventListener('install', (event) => {
     })
   );
 });
-
 
 self.addEventListener('activate', event => {
   //Remove old and unwanted caches
