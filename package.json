@@ -1,6 +1,6 @@
 {
   "name": "rock-paper-scissors-pwa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple Rock Paper Scissors Game based on Vanilla JavaScript, Jest for Testing and is Progressive Web App enabled.",
   "main": "index.html",
   "dependencies": {

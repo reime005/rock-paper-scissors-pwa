@@ -529,7 +529,7 @@ exports.getRandomChoice = getRandomChoice;
 var _weapons = require("../config/weapons");
 
 function getRandomChoice() {
-  return Math.floor(Math.random() * _weapons.weaponTypes.SCISSORS + 1 + 0);
+  return Math.floor(Math.random() * (_weapons.weaponTypes.SCISSORS + 1) + 0);
 }
 
 },{"../config/weapons":10}],17:[function(require,module,exports){

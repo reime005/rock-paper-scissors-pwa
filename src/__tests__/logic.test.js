@@ -73,6 +73,44 @@ describe('Game of', () => {
     expect(app.store.getState().player2Count).toBeGreaterThan(0);
   });
 
+  it('computer vs computer cover all weapons', () => {
+    app.store.dispatch(setGameModeAction(gameModes.CVC));
+
+    let rockPlayed = false;
+    let scissorsPlayed = false;
+    let paperPlayed = false;
+
+    // random games so that the chance that both players have won is high
+    for (let i = 0; i < 1000; i++) {
+      app.store.dispatch(playerChoiceAction());
+
+      if (app.store.getState().player1Choice === weaponTypes.ROCK ||
+      app.store.getState().player2Choice === weaponTypes.ROCK) {
+        rockPlayed = true;
+      }
+
+      if (app.store.getState().player1Choice === weaponTypes.SCISSORS ||
+      app.store.getState().player2Choice === weaponTypes.SCISSORS) {
+        scissorsPlayed = true;
+      }
+
+      if (app.store.getState().player1Choice === weaponTypes.PAPER ||
+      app.store.getState().player2Choice === weaponTypes.PAPER) {
+        paperPlayed = true;
+      }
+
+      app.store.dispatch(roundRestartAction());
+
+      if (rockPlayed && scissorsPlayed && paperPlayed) {
+        break;
+      }
+    }
+
+    expect(rockPlayed).toBeTruthy();
+    expect(scissorsPlayed).toBeTruthy();
+    expect(paperPlayed).toBeTruthy();
+  });
+
   it('round restart resets correctly', () => {
     app.store.dispatch(playerChoiceAction(weaponTypes.SCISSORS, weaponTypes.PAPER));
 
