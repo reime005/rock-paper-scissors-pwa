@@ -76,8 +76,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _actions = require("../actions/actions");
 
-var _weapons = require("../config/weapons");
-
 var _initialState = require("../config/initialState");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -136,7 +134,7 @@ var GameControlView = exports.GameControlView = function () {
   return GameControlView;
 }();
 
-},{"../actions/actions":2,"../config/initialState":7,"../config/weapons":10}],4:[function(require,module,exports){
+},{"../actions/actions":2,"../config/initialState":7}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -389,6 +387,10 @@ var _GameControlView = require("./components/GameControlView");
 
 var _registerServiceWorker = require("../../src/js/registerServiceWorker");
 
+var _registerServiceWorker2 = _interopRequireDefault(_registerServiceWorker);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var App = exports.App = function () {
@@ -414,7 +416,7 @@ var app = new App();
 
 window.addEventListener('load', function () {
   app.init();
-  (0, _registerServiceWorker.registerServiceWorker)();
+  (0, _registerServiceWorker2.default)();
 });
 
 },{"../../src/js/registerServiceWorker":18,"./components/GameControlView":3,"./components/GameModeView":4,"./components/GamePlayView":5,"./store":19}],12:[function(require,module,exports){
@@ -645,47 +647,49 @@ exports.default = function (state, action) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.registerServiceWorker = registerServiceWorker;
-function registerServiceWorker() {
-    if (!navigator.serviceWorker) {
-        return;
-    }
 
-    function trackInstalling(worker) {
-        console.log('Service Worker: installing...');
-        worker.addEventListener('statechange', function () {
-            console.log('Service Worker: ', worker.state);
-        });
-    }
+exports.default = function () {
+  if (!navigator.serviceWorker) {
+    return;
+  }
 
-    navigator.serviceWorker.register('serviceWorker.js', {
-        scope: './'
-    }).then(function (reg) {
-        console.log('Service Worker: registered');
+  function install(worker) {
+    console.log('Service Worker is installing ...');
 
-        if (!navigator.serviceWorker.controller) {
-            return;
-        }
-
-        if (reg.waiting) {
-            console.log('Service Worker: installed');
-            return;
-        }
-
-        if (reg.installing) {
-            trackInstalling(reg.installing);
-            return;
-        }
-
-        reg.addEventListener('updatefound', function () {
-            trackInstalling(reg.installing);
-        });
-    }).catch(function (err) {
-        console.log('Service Worker: registration failed ', err);
+    worker.addEventListener('statechange', function () {
+      console.log('Service Worker state changed: ' + worker.state);
     });
-}
+  }
+
+  navigator.serviceWorker.register('serviceWorker.js', {
+    scope: './'
+  }).then(function (registration) {
+    console.log('Service Worker has been registered');
+
+    if (typeof navigator.serviceWorker.controller === 'undefined') {
+      return;
+    }
+
+    if (registration.waiting) {
+      console.log('Service Worker has been installed');
+      return;
+    }
+
+    if (registration.installing) {
+      install(registration.installing);
+      return;
+    }
+
+    registration.addEventListener('updatefound', function () {
+      console.log('Service Worker is updating');
+      install(registration.installing);
+    });
+  }).catch(function (error) {
+    console.log('Service Worker registration error: ' + error.message);
+  });
+};
 
 },{}],19:[function(require,module,exports){
 'use strict';

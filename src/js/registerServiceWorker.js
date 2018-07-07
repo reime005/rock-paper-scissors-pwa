@@ -1,39 +1,40 @@
-export function registerServiceWorker() {
+export default () => {
   if (!navigator.serviceWorker) {
     return;
-}
+  }
 
-function trackInstalling(worker) {
-    console.log('Service Worker: installing...');
+  function install(worker) {
+    console.log('Service Worker is installing ...');
+
     worker.addEventListener('statechange', () => {
-        console.log('Service Worker: ', worker.state);
+      console.log(`Service Worker state changed: ${worker.state}`);
     });
-}
+  }
 
-navigator.serviceWorker.register('serviceWorker.js', {
+  navigator.serviceWorker.register('serviceWorker.js', {
     scope: './'
-}).then(reg => {
-    console.log('Service Worker: registered');
+  }).then(registration => {
+    console.log('Service Worker has been registered');
 
-    if (!navigator.serviceWorker.controller) {
-        return;
+    if (typeof navigator.serviceWorker.controller === 'undefined') {
+      return;
     }
 
-    if (reg.waiting) {
-        console.log('Service Worker: installed');
-        return;
+    if (registration.waiting) {
+      console.log('Service Worker has been installed');
+      return;
     }
 
-    if (reg.installing) {
-        trackInstalling(reg.installing);
-        return;
+    if (registration.installing) {
+      install(registration.installing);
+      return;
     }
 
-    reg.addEventListener('updatefound', () => {
-        trackInstalling(reg.installing);
+    registration.addEventListener('updatefound', () => {
+      console.log('Service Worker is updating');
+      install(registration.installing);
     });
-
-}).catch(err => {
-    console.log('Service Worker: registration failed ', err);
-});
+  }).catch(error => {
+    console.log(`Service Worker registration error: ${error.message}`);
+  });
 }

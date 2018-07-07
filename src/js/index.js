@@ -2,7 +2,7 @@ import { Store } from "./store";
 import { GameModeView } from "./components/GameModeView";
 import { GamePlayView } from "./components/GamePlayView";
 import { GameControlView } from "./components/GameControlView";
-import { registerServiceWorker } from "../../src/js/registerServiceWorker";
+import registerServiceWorker from "../../src/js/registerServiceWorker";
 
 export class App {
   constructor() {
