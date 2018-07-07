@@ -5,6 +5,12 @@ Author: Marius Reimer
 ## Description
 A simple and extensible Web App for playing Rock, Paper, Scissors. 
 
+* Basic Progressive Web App Example
+* Using Basic JavaScript ES2015 
+* No React, Redux, Angular, etc. or any UI Framework
+* Jest for unit testing
+* Sass and Gulp
+
 ## Run Instructions
 Just pull or download the repository and open the `index.html` file.
 
@@ -30,3 +36,9 @@ or installing it globally:
 Testing of the logic is done via jest:
 
     npm run test
+
+## Contribution
+Feel free to contribute via the issue tracker / pull request or personal message.
+
+## License
+MIT © 2018 [reime005](https://github.com/reime005)

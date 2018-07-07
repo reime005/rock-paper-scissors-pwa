@@ -4,7 +4,8 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var jest = require('gulp-jest').default;
 var sass = require('gulp-sass');
-
+var webserver = require('gulp-webserver');
+ 
 gulp.task('jest', function () {
   process.env.NODE_ENV = 'test';
 
@@ -14,6 +15,17 @@ gulp.task('jest', function () {
     ],
     "automock": false
   }));
+});
+
+gulp.task('webserver', function() {
+  gulp.src('./')
+    .pipe(webserver({
+      directoryListing: false,
+      path: '/',
+      livereload: true,
+      open: true,
+      fallback: 'index.html'
+    }));
 });
 
 gulp.task('js', function () {
@@ -34,7 +46,10 @@ gulp.task('sass', function() {
 
 gulp.task('default', ['sass', 'js']);
 
+gulp.task('server', ['default', 'watch', 'webserver']);
+
 gulp.task('watch', function () {
-  gulp.watch('./src/js/**/*.js', ['default']);
+  gulp.watch('./src/js/**/*.js', ['js']);
+  gulp.watch('./serviceWorker.js', ['js']);
   gulp.watch('./src/scss/**/*.scss', ['sass']); 
 });

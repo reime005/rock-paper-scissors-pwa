@@ -1,5 +1,4 @@
-import { playerChoiceAction, newGameAction, roundRestartAction } from "../actions/actions";
-import { weaponTypes } from "../config/weapons";
+import { newGameAction, roundRestartAction } from "../actions/actions";
 import { initialState } from "../config/initialState";
 
 export class GameControlView {

@@ -2,6 +2,7 @@ import { Store } from "./store";
 import { GameModeView } from "./components/GameModeView";
 import { GamePlayView } from "./components/GamePlayView";
 import { GameControlView } from "./components/GameControlView";
+import registerServiceWorker from "../../src/js/registerServiceWorker";
 
 export class App {
   constructor() {
@@ -17,4 +18,7 @@ export class App {
 
 const app = new App();
 
-window.addEventListener('load', () => app.init());
+window.addEventListener('load', () => {
+  app.init();
+  registerServiceWorker();
+});
