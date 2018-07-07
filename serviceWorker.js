@@ -16,7 +16,7 @@ var files = [
   './manifest.json'
 ];
 
-var cacheNameTag = 'rock-paper-scissors-pwa-cache-v0.0.9';
+var cacheNameTag = 'rock-paper-scissors-pwa-cache-v1.0.0';
 
 // Adding the install event listener
 self.addEventListener('install', (event) => {

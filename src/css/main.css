@@ -18,12 +18,12 @@ h2 {
 .container {
   width: auto;
   height: auto;
-  padding: 2vw;
+  padding: .25vw;
   display: block; }
   .container .topContainer, .container .middleContainer, .container .bottomContainer {
-    padding: 2vw;
+    padding: .25vw;
     box-shadow: 0 3px 12px #222631, 0 3px 12px #222631;
-    margin: 3vw;
+    margin: 2vw;
     background-color: #f5f5f5;
     text-align: center; }
   .container .middleContainer h3 {
@@ -62,7 +62,7 @@ h2 {
   height: auto;
   white-space: nowrap;
   width: auto;
-  padding: auto;
+  padding: .125vw;
   margin: auto;
   text-align: center;
   justify-content: center; }
